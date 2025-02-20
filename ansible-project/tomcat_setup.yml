@@ -1,0 +1,33 @@
+---
+- name: Configure Application Server
+  hosts: application
+  become: true
+  tasks:
+
+    - name: Install Java
+      yum:
+        name: java-11-openjdk
+        state: present
+
+    - name: Install Tomcat
+      yum:
+        name: tomcat
+        state: present
+
+    - name: Start and Enable Tomcat
+      systemd:
+        name: tomcat
+        state: started
+        enabled: yes
+
+    - name: Open Firewall for Tomcat
+      firewalld:
+        port: 8080/tcp
+        permanent: yes
+        state: enabled
+
+    - name: Reload Firewalld
+      systemd:
+        name: firewalld
+        state: reloaded
+

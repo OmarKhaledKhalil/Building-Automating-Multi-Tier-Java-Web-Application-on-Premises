@@ -1,0 +1,7 @@
+---
+#- import_playbook: db_setup.yml
+#- import_playbook: memcached_setup.yml
+- import_playbook: rabbitmq_setup.yml
+- import_playbook: nginx_setup.yml
+- import_playbook: tomcat_setup.yml
+

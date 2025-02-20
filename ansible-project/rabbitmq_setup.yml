@@ -1,0 +1,31 @@
+---
+- name: Configure RabbitMQ Server
+  hosts: messaging
+  become: true
+  tasks:
+
+    - name: Install RabbitMQ Server
+      yum:
+        name: rabbitmq-server
+        state: present
+
+    - name: Start and Enable RabbitMQ
+      systemd:
+        name: rabbitmq-server
+        state: started
+        enabled: yes
+
+    - name: Open Firewall for RabbitMQ
+      firewalld:
+        port: "{{ item }}"
+        permanent: yes
+        state: enabled
+      loop:
+        - 5672/tcp
+        - 15672/tcp
+
+    - name: Reload Firewalld
+      systemd:
+        name: firewalld
+        state: reloaded
+

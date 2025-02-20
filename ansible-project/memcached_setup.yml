@@ -1,0 +1,17 @@
+---
+- name: Configure Memcached Server
+  hosts: caching
+  become: true
+  tasks:
+
+    - name: Install Memcached
+      yum:
+        name: memcached
+        state: present
+
+    - name: Start and Enable Memcached
+      systemd:
+        name: memcached
+        state: started
+        enabled: yes
+

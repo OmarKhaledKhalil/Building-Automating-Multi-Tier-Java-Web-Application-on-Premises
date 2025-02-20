@@ -1,0 +1,57 @@
+---
+- name: Configure Web Server
+  hosts: web
+  become: true
+  tasks:
+
+    - name: Install Nginx
+      package:
+        name: nginx
+        state: present
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Install Nginx (for RedHat)
+      dnf:
+        name: nginx
+        state: present
+      when: ansible_facts['os_family'] == "RedHat"
+
+    - name: Start and Enable Nginx
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+        
+    - name: Install required firewall packages
+      apt:
+        name:
+          - python3-firewall
+          - firewalld
+        state: present
+        update_cache: yes
+      when: ansible_facts['os_family'] == "Debian"
+
+    - name: Install required firewall packages (for RedHat)
+      dnf:
+        name:
+          - python3-firewall
+          - firewalld
+        state: present
+      when: ansible_facts['os_family'] == "RedHat"
+
+
+
+    - name: Open Firewall for HTTP & HTTPS
+      firewalld:
+        port: "{{ item }}"
+        permanent: yes
+        state: enabled
+      loop:
+        - 80/tcp
+        - 443/tcp
+
+    - name: Reload Firewalld
+      systemd:
+        name: firewalld
+        state: reloaded
+

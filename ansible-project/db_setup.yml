@@ -1,0 +1,28 @@
+---
+- name: Configure Database Server
+  hosts: database
+  become: true
+  tasks:
+
+    - name: Install MariaDB Server
+      yum:
+        name: mariadb-server
+        state: present
+
+    - name: Start and Enable MariaDB
+      systemd:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Open Firewall for MySQL
+      firewalld:
+        service: mysql
+        permanent: yes
+        state: enabled
+
+    - name: Reload Firewalld
+      systemd:
+        name: firewalld
+        state: reloaded
+

@@ -1,0 +1,15 @@
+[database]
+db01 ansible_ssh_common_args='-F /home/omar/Building_Automating_Multi_Tier_Java_Web_Application_on_Premises_Vagrant_project/ssh_config'
+
+[caching]
+mc01 ansible_ssh_common_args='-F /home/omar/Building_Automating_Multi_Tier_Java_Web_Application_on_Premises_Vagrant_project/ssh_config'
+
+[messaging]
+rmq01 ansible_ssh_common_args='-F /home/omar/Building_Automating_Multi_Tier_Java_Web_Application_on_Premises_Vagrant_project/ssh_config'
+
+[application]
+app01 ansible_ssh_common_args='-F /home/omar/Building_Automating_Multi_Tier_Java_Web_Application_on_Premises_Vagrant_project/ssh_config'
+
+[web]
+web01 ansible_ssh_common_args='-F /home/omar/Building_Automating_Multi_Tier_Java_Web_Application_on_Premises_Vagrant_project/ssh_config'
+
